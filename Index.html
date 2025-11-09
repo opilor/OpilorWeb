@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Opilor – Features</title>
+  <!-- 引入 Poppins 字体 -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #42f56d;
+      --dark-bg: #111;
+      --light-bg: #f8f9fa;
+      --text-color: #333;
+      --text-light: #fff;
+    }
+
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      color: var(--text-color);
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* 顶部导航 */
+    .site-header {
+      background: rgba(0, 0, 0, 0.7);
+      position: fixed;
+      width: 100%;
+      z-index: 100;
+    }
+
+    .site-header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+    }
+
+    .logo {
+      color: var(--primary-color);
+      font-size: 2em; /* Logo 大小 */
+      font-weight: 700;
+      font-family: 'Poppins', sans-serif; /* 使用 Poppins */
+      margin-left: -10px; /* 向左移动 */
+    }
+
+    .site-nav ul {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+      transition: all 0.3s ease;
+    }
+
+    .site-nav ul li {
+      margin-left: 25px;
+    }
+
+    .site-nav ul li a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 500;
+      font-family: sans-serif;
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 10px 25px;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+
+    .btn-primary {
+      background: var(--primary-color);
+      color: #000;
+    }
+
+    .btn-primary:hover {
+      background: #32d85c;
+    }
+
+    .btn-outline {
+      border: 2px solid var(--text-light);
+      color: var(--text-light);
+    }
+
+    .btn-outline:hover {
+      background: var(--text-light);
+      color: var(--dark-bg);
+    }
+
+    /* Hamburger Menu */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background: var(--text-light);
+      margin: 4px 0;
+      transition: all 0.3s ease;
+    }
+
+    /* Hero 区 */
+    .hero {
+      height: 100vh;
+      background: url('image/landing.png') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--text-light);
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      top:0; left:0; right:0; bottom:0;
+      background: rgba(0,0,0,0.5);
+      z-index: 1;
+    }
+
+    .hero .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero h1 {
+      font-size: 3em;
+      font-family: 'Poppins', sans-serif;
+      margin-bottom: 20px;
+    }
+
+    .hero .highlight {
+      color: var(--primary-color);
+    }
+
+    .hero p {
+      font-size: 1.2em;
+      font-family: sans-serif;
+      margin-bottom: 30px;
+    }
+
+    /* Features 区 */
+    .features-section {
+      padding: 80px 0;
+      background: var(--light-bg);
+      text-align: center;
+    }
+
+    .section-title {
+      font-size: 2.4em;
+      font-family: 'Poppins', sans-serif;
+      margin-bottom: 40px;
+      color: var(--text-color);
+    }
+
+    .features-grid {
+      display: flex;
+      justify-content: center;
+      gap: 45px;
+      flex-wrap: wrap;
+    }
+
+    .feature-item {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      width: 280px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    .feature-icon {
+      font-size: 2.8em;
+      color: var(--primary-color);
+      margin-bottom: 15px;
+    }
+
+    .feature-item h3 {
+      margin-bottom: 15px;
+      color: var(--text-color);
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .feature-item p {
+      color: #666;
+      font-family: sans-serif;
+    }
+
+    /* Footer */
+    .site-footer {
+      background: var(--dark-bg);
+      color: #aaa;
+      padding: 60px 0 20px 0;
+      text-align: left;
+    }
+
+    .footer-container {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+
+    .footer-section h4 {
+      color: var(--text-light);
+      margin-bottom: 15px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .footer-section p, .footer-section a, .footer-section li {
+      color: #aaa;
+      text-decoration: none;
+      margin: 5px 0;
+      display: block;
+      font-size: 0.9em;
+      font-family: sans-serif;
+    }
+
+    .footer-section ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .social-icons a {
+      margin-right: 10px;
+      font-size: 1.2em;
+      display: inline-block;
+    }
+
+    .footer-bottom {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 0.85em;
+      color: #777;
+      font-family: sans-serif;
+    }
+
+    /* 响应式 */
+    @media (max-width: 768px) {
+      .hamburger {
+        display: flex;
+      }
+
+      .site-nav ul {
+        flex-direction: column;
+        background: rgba(0,0,0,0.9);
+        position: fixed;
+        top: 60px;
+        right: -100%;
+        width: 200px;
+        height: calc(100% - 60px);
+        padding-top: 20px;
+        transition: right 0.3s ease;
+        z-index: 200;
+      }
+
+      .site-nav ul.show {
+        right: 0;
+      }
+
+      .site-nav ul li {
+        margin: 15px 0;
+        text-align: center;
+      }
+
+      .features-grid {
+        flex-direction: column;
+        gap: 30px;
+      }
+
+      .hero h1 {
+        font-size: 2.2em;
+      }
+
+      .hero p {
+        font-size: 1em;
+      }
+
+      .footer-container {
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .logo {
+        margin-left: 0; /* 移动端不偏移 */
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <div class="logo">Opilor</div>
+      <nav class="site-nav">
+        <div class="hamburger" id="hamburger">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <ul id="nav-list">
+          <li><a href="#features">Features</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#login" class="btn btn-outline">Join Now</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-content">
+      <h1>Discover <span class="highlight">Opilor</span> Features</h1>
+      <p>Explore the capabilities that make Opilor the ideal choice for simplifying everyday life.</p>
+      <a href="#features" class="btn btn-primary">See Features</a>
+    </div>
+  </section>
+
+  <section id="features" class="features-section">
+    <div class="container">
+      <h2 class="section-title">Key Features</h2>
+      <div class="features-grid">
+        <div class="feature-item">
+          <div class="feature-icon">🔒</div>
+          <h3>Secure & Reliable</h3>
+          <p>Built with enterprise‑grade security and reliability to protect your data.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">⚡</div>
+          <h3>Fast Onboarding</h3>
+          <p>Get started in minutes with a streamlined setup process and intuitive interface.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🎨</div>
+          <h3>Customize Your Flow</h3>
+          <p>Adapt Opilor to your workflow with flexible tools and integrations.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact" class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-section">
+        <h4>About Opilor</h4>
+        <p>Opilor is a cutting-edge platform that simplifies everyday tasks, increases productivity, and ensures data security for all users.</p>
+      </div>
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Contact</h4>
+        <p>Email: <a href="mailto:support@opilor.com">support@opilor.com</a></p>
+        <p>Phone: +1 (123) 456-7890</p>
+        <p>Address: 123 Opilor St, Tech City, USA</p>
+      </div>
+      <div class="footer-section social-icons">
+        <h4>Follow Us</h4>
+        <a href="#" title="Facebook">📘</a>
+        <a href="#" title="Twitter">🐦</a>
+        <a href="#" title="LinkedIn">🔗</a>
+        <a href="#" title="Instagram">📸</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Opilor. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navList = document.getElementById('nav-list');
+
+    // 点击汉堡图标展开/收起菜单
+    hamburger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      navList.classList.toggle('show');
+    });
+
+    // 点击菜单项收起菜单
+    const navItems = navList.querySelectorAll('a');
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        navList.classList.remove('show');
+      });
+    });
+
+    // 点击页面其他地方收起菜单
+    document.addEventListener('click', () => {
+      if (navList.classList.contains('show')) {
+        navList.classList.remove('show');
+      }
+    });
+
+    // 阻止点击菜单本身收起
+    navList.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+  </script>
+</body>
+</html>
