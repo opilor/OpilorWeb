@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Opilor Requester Panel</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { 'opilor-green': '#6CC74C' } } }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; transition: background-color 0.3s, color 0.3s; background-color: #f4f4f4; color: #333; }
+    .dark body { background-color: #0f172a; color: #cbd5e1; }
+    h1,h2,h3,.logo-font { font-family: 'Poppins', sans-serif; }
+    input, button, select { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="transition-all">
+
+<!-- NAVBAR -->
+<header class="bg-white dark:bg-slate-900 shadow-md sticky top-0 z-50">
+  <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+    <a href="https://opilor.com" target="_blank" class="text-3xl font-bold text-opilor-green logo-font">Opilor</a>
+    <nav class="hidden md:flex items-center space-x-6">
+      <a href="#how-it-works" class="text-gray-800 dark:text-gray-300 hover:text-opilor-green transition">How It Works</a>
+      <a href="#helper" class="text-gray-800 dark:text-gray-300 hover:text-opilor-green transition">Become a Helper</a>
+      <a href="#services" class="text-gray-800 dark:text-gray-300 hover:text-opilor-green transition">Services</a>
+      <a href="#join" class="bg-opilor-green text-white font-semibold py-2 px-6 rounded-lg hover:opacity-90 transition">Join the Beta</a>
+    </nav>
+    <button id="theme-toggle" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded">
+      <i id="theme-icon" class="fas fa-moon"></i>
+    </button>
+  </div>
+</header>
+
+<main class="container mx-auto px-6 py-12">
+  <h2 class="text-3xl md:text-4xl font-bold text-[#333333] dark:text-white mb-8 logo-font">Opilor Requester Panel</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+
+    <!-- MODULE 1: CREATE TASK -->
+    <div class="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-lg flex flex-col gap-4">
+      <h3 class="text-xl text-gray-900 dark:text-white font-semibold mb-2">Create New Task</h3>
+      <label>Task Type</label>
+      <select id="taskType" class="p-3 rounded border border-gray-300 dark:border-slate-600 focus:ring-2 focus:ring-opilor-green">
+        <option value="">Select Task Type</option>
+        <option value="Moving">Moving</option>
+        <option value="Info Check">Info Check</option>
+        <option value="Item Delivery">Item Delivery</option>
+        <option value="Translation">Translation</option>
+        <option value="Housekeeping">Housekeeping</option>
+        <option value="Document Help">Document Help</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <label>Task</label>
+      <input type="text" id="taskDesc" placeholder="Describe the task" class="p-3 rounded border border-gray-300 dark:border-slate-600">
+      <label>Location</label>
+      <input type="text" id="location" placeholder="Location" class="p-3 rounded border border-gray-300 dark:border-slate-600">
+      <label>Date</label>
+      <input type="date" id="date" class="p-3 rounded border border-gray-300 dark:border-slate-600">
+      <label>Time</label>
+      <input type="time" id="time" class="p-3 rounded border border-gray-300 dark:border-slate-600">
+      <label>Cell Number</label>
+      <input type="text" id="cellNumber" placeholder="Cell Number" class="p-3 rounded border border-gray-300 dark:border-slate-600">
+      <label>TaskPass</label>
+      <input type="text" id="taskPass" placeholder="Set a task password" class="p-3 rounded border border-gray-300 dark:border-slate-600">
+
+      <button onclick="createTask()" class="bg-opilor-green text-white py-3 px-6 rounded-lg shadow hover:opacity-90 transition-all">Submit Task</button>
+      <p id="createResult" class="mt-2"></p>
+    </div>
+
+    <!-- MODULE 2: UPDATE TASK STATE -->
+    <div class="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-lg flex flex-col gap-4">
+      <h3 class="text-xl text-gray-900 dark:text-white font-semibold mb-2">Update Task Status</h3>
+      <label>Task ID</label>
+      <input type="text" id="taskIdUpdate" placeholder="Enter Task ID" class="p-3 rounded border border-gray-300 dark:border-slate-600">
+      <label>TaskPass</label>
+      <input type="text" id="taskPassUpdate" placeholder="Enter TaskPass" class="p-3 rounded border border-gray-300 dark:border-slate-600">
+      <label>Task State</label>
+      <select id="taskState" class="p-3 rounded border border-gray-300 dark:border-slate-600">
+        <option value="">Select Task State</option>
+        <option value="Open">Open</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Completed">Completed</option>
+      </select>
+
+      <button onclick="updateTaskState()" class="bg-opilor-green text-white py-3 px-6 rounded-lg shadow hover:opacity-90 transition-all">Update Task</button>
+      <p id="updateResult" class="mt-2"></p>
+    </div>
+
+  </div>
+</main>
+
+<script>
+const webAppUrl = "https://script.google.com/macros/s/AKfycbyfTcNdEQN41TTiL87NiBimHSQIbxcy6XcJffARQpRQwr3Zm69kDyf1f4rQH3jczlvr/exec"; // 替换为你部署的 Web App URL
+
+// DARK MODE TOGGLE
+const themeToggle = document.getElementById('theme-toggle');
+const themeIcon = document.getElementById('theme-icon');
+themeToggle.addEventListener('click', () => {
+  document.documentElement.classList.toggle('dark');
+  themeIcon.classList.toggle('fa-moon');
+  themeIcon.classList.toggle('fa-sun');
+});
+
+// CREATE TASK
+function createTask() {
+  const type = document.getElementById('taskType').value.trim();
+  const task = document.getElementById('taskDesc').value.trim();
+  const location = document.getElementById('location').value.trim();
+  const date = document.getElementById('date').value.trim();
+  const time = document.getElementById('time').value.trim();
+  const cell = document.getElementById('cellNumber').value.trim();
+  const pass = document.getElementById('taskPass').value.trim();
+  const resEl = document.getElementById('createResult');
+
+  if(!type || !task || !location || !date || !time || !cell || !pass){
+    resEl.innerText = 'All fields are required';
+    resEl.style.color = 'red';
+    return;
+  }
+
+  resEl.innerText = 'Working...';
+  resEl.style.color = 'black';
+
+  fetch(`${webAppUrl}?action=createTask&type=${encodeURIComponent(type)}&task=${encodeURIComponent(task)}&location=${encodeURIComponent(location)}&date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}&cell=${encodeURIComponent(cell)}&pass=${encodeURIComponent(pass)}`)
+    .then(r => r.json())
+    .then(data => {
+      resEl.innerText = data.msg;
+      resEl.style.color = data.ok ? 'green' : 'red';
+    })
+    .catch(err => {
+      resEl.innerText = 'Request failed: ' + err;
+      resEl.style.color = 'red';
+    });
+}
+
+// UPDATE TASK STATE
+function updateTaskState() {
+  const id = document.getElementById('taskIdUpdate').value.trim();
+  const pass = document.getElementById('taskPassUpdate').value.trim();
+  const state = document.getElementById('taskState').value.trim();
+  const resEl = document.getElementById('updateResult');
+
+  if(!id || !pass || !state){
+    resEl.innerText = 'All fields are required';
+    resEl.style.color = 'red';
+    return;
+  }
+
+  resEl.innerText = 'Working...';
+  resEl.style.color = 'black';
+
+  fetch(`${webAppUrl}?action=updateTaskState&id=${encodeURIComponent(id)}&pass=${encodeURIComponent(pass)}&state=${encodeURIComponent(state)}`)
+    .then(r => r.json())
+    .then(data => {
+      resEl.innerText = data.msg;
+      resEl.style.color = data.ok ? 'green' : 'red';
+    })
+    .catch(err => {
+      resEl.innerText = 'Request failed: ' + err;
+      resEl.style.color = 'red';
+    });
+}
+</script>
+
+</body>
+</html>
